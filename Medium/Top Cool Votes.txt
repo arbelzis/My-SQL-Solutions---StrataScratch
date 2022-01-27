@@ -1,0 +1,30 @@
+Find the review_text that received the highest number of  'cool' votes.
+Output the business name along with the review text with the highest numbef of 'cool' votes.
+
+
+
+
+
+SOLUTION:
+
+SELECT
+    business_name,
+    review_text
+FROM yelp_reviews
+WHERE cool = (SELECT max(cool) FROM yelp_reviews)
+
+
+
+
+
+DB:
+
+business_name		varchar
+review_idvar		char
+user_idvar		char
+starsvar		char
+review_date		datetime
+review_text		varchar
+funny			int
+useful			int
+cool			int

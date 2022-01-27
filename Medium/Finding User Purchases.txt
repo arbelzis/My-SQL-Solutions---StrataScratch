@@ -1,0 +1,46 @@
+Write a query that'll identify returning active users. A returning active user is a user that has made a second purchase within 7 days of any other of their purchases. 
+Output a list of user_ids of these returning active users.
+
+
+
+
+
+SOLUTION:
+
+WITH
+transactions_by_users AS (
+    SELECT
+        user_id,
+        created_at
+    FROM amazon_transactions
+    GROUP BY user_id, created_at, revenue
+    ORDER BY user_id, created_at
+),
+compared_transactions AS (
+    SELECT 
+        *,
+        lag(created_at) OVER(partition by user_id) last_transaction
+    FROM transactions_by_users
+),
+transactions_difference AS (
+    SELECT
+        *,
+        DATEDIFF(created_at, last_transaction) difference
+    FROM compared_transactions 
+)
+
+SELECT distinct user_id FROM transactions_difference WHERE difference <= 7  ORDER by user_id
+
+
+
+
+
+
+DB:
+
+amazon_transactions
+id		int
+user_id		int
+itemvar		char
+created_at	datetime
+revenue		int

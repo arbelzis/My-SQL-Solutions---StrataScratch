@@ -1,0 +1,33 @@
+Calculate the total revenue from each customer in March 2019. 
+
+Output the revenue along with the customer id and sort the results based on the revenue in descending order.
+
+
+
+
+
+
+SOLUTION:
+
+SELECT
+    cust_id,
+    SUM(total_order_cost) total
+FROM orders
+WHERE monthname(order_date) = 'March'
+GROUP BY cust_id
+ORDER BY total DESC
+
+
+
+
+
+DB:
+
+DB:
+
+orders
+id				int
+cust_id				int
+order_date			datetime
+order_details			varchar
+total_order_cost		int
