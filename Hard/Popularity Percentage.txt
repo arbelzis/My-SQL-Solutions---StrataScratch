@@ -1,0 +1,40 @@
+Find the popularity percentage for each user on Meta/Facebook. The popularity percentage is defined as the total number of friends the user has divided by the total number of users on the platform, then converted into a percentage by multiplying by 100.
+Output each user along with their popularity percentage. Order records in ascending order by user id.
+The 'user1' and 'user2' column are pairs of friends.
+
+
+
+
+
+SOLUTION:
+
+WITH
+breakdown AS (
+    (SELECT user1 FROM facebook_friends)
+    UNION ALL
+    (SELECT user2 FROM facebook_friends)
+),
+total_users AS (
+    SELECT DISTINCT
+        COUNT(user1)
+    FROM ((SELECT user1 FROM facebook_friends)
+    UNION
+    (SELECT user2 FROM facebook_friends)) t1
+)
+SELECT
+    user1,
+    (COUNT(1) / (SELECT * FROM total_users))* 100 percentage
+FROM breakdown
+GROUP BY 1
+ORDER BY 1
+
+
+
+
+
+
+DB:
+
+facebook_friends
+user1		int
+user2		int
