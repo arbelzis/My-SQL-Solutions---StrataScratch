@@ -1,0 +1,45 @@
+Find the number of interactions along with the number of people involved with them on a given day. 
+Output the date along with the number of interactions and people. 
+Order results based on the date in ascending order and the number of people in descending order. 
+
+
+
+
+
+SOLUTION:
+
+WITH
+user_involved AS (
+    SELECT day, COUNT(1) n_people
+    FROM (
+        SELECT day, user1 FROM facebook_user_interactions
+        UNION
+        SELECT day, user2 FROM facebook_user_interactions
+    ) x
+    GROUP BY day
+),
+intercations AS (
+    SELECT
+        day,
+        COUNT(1) n_interactions
+    FROM facebook_user_interactions
+    GROUP BY day
+)
+SELECT 
+    u.day, 
+    i.n_interactions, 
+    u.n_people 
+FROM intercations i JOIN user_involved u ON i.day = u.day
+ORDER BY  i.n_interactions ASC, u.n_people DESC
+
+
+
+
+
+DB:
+
+facebook_user_interactions
+day		int
+user1		int
+user2		int
+

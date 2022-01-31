@@ -1,0 +1,41 @@
+Find managers with at least 7 direct reporting employees.
+Output first names of managers.
+
+
+
+
+
+SOLUTION:
+
+SELECT
+    first_name
+FROM
+(
+    SELECT
+        manager_id
+    FROM employee
+    GROUP BY manager_id
+    HAVING COUNT(*) >= 7
+) t1 JOIN employee t2 ON t1.manager_id = t2.id
+
+
+
+
+
+DB:
+
+employee
+id			int
+first_name		varchar
+last_name		varchar
+age			int
+sex			varchar
+employee_title		varchar
+department		varchar
+salary			int
+target			int
+bonus			int
+email			varchar
+city			varchar
+address			varchar
+manager_id		int

@@ -1,0 +1,42 @@
+Find the most common reaction for day 1 by counting the number of occurrences for each reaction. \
+Output the reaction alongside its number of occurrences. 
+
+
+
+
+
+SOLUTION:
+
+SELECT
+    reaction,
+    total
+FROM 
+(
+    SELECT
+        reaction,
+        total,
+        max(total) OVER() max_total
+    FROM 
+    (
+        SELECT
+            reaction,
+            COUNT(1) total
+        FROM facebook_reactions
+        WHERE date_day = 1
+        GROUP BY reaction
+    ) t1
+) t2
+WHERE total = max_total
+
+
+
+
+
+DB:
+
+facebook_reactions
+poster		int
+friend		int
+reaction	varchar
+date_day	int
+post_id		int

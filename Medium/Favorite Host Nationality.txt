@@ -1,0 +1,49 @@
+For each guest reviewer, find the nationality of the reviewer’s favorite host based on the guest’s highest review score given to a host. 
+Output the user ID of the guest along with their favorite host’s nationality.
+
+Both the `from_user` and `to_user` columns are user IDs.
+
+
+
+
+
+SOLUTION:
+
+WITH
+guests_reviews AS (
+    SELECT * FROM airbnb_reviews WHERE from_type = 'guest'
+),
+joined AS (
+    SELECT from_user, h.host_id, r.review_score, h.nationality
+    FROM guests_reviews r JOIN airbnb_hosts h ON r.to_user = h.host_id
+),
+ranked AS (
+    SELECT *, RANK() OVER(partition by from_user ORDER BY review_score DESC) rnk
+    FROM joined
+)
+
+SELECT 
+    from_user,
+    nationality
+FROM ranked
+WHERE rnk = 1
+GROUP BY from_user, nationality
+
+
+
+
+
+DB:
+
+airbnb_reviews
+from_user		int
+to_user			int
+from_type		varchar
+to_typev		archar
+review_score		int
+
+airbnb_hosts
+host_id			int
+nationality		varchar
+gender			varchar
+age			int

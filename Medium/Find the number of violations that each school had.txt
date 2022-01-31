@@ -1,0 +1,42 @@
+Find the number of violations that each school had. Any inspection is considered a violation if its risk category is not null.
+Output the corresponding business name along with the result.
+Order the result based on the number of violations in descending order.
+
+
+
+
+
+SOLUTION:
+
+SELECT
+    business_name,
+    COUNT(1) total_violations
+FROM sf_restaurant_health_violations
+WHERE business_name LIKE '%school%' AND risk_category IS NOT NULL
+GROUP BY business_name
+ORDER BY COUNT(1) DESC
+
+
+
+
+
+DB:
+
+sf_restaurant_health_violations
+business_id		int
+business_name		varchar
+business_address	varchar
+business_city		varchar
+business_state		varchar
+business_postal_code	float
+business_latitude	float
+business_longitude	float
+business_location	varchar
+business_phone_number	float
+inspection_id		varchar
+inspection_date		datetime
+inspection_score	float
+inspection_type		varchar
+violation_id		varchar
+violation_description	varchar
+risk_category		varchar

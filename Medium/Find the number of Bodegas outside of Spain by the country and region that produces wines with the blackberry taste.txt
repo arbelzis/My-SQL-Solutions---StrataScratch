@@ -1,0 +1,36 @@
+Find the number of Bodegas (wineries with "*bodega*" pattern inside the name) outside of Spain by the country and region that produces wines with the blackberry taste.
+Output the country, region along with the number of bodegas.
+Order records by the number of bodegas in descending order.
+
+
+
+
+
+SOLUTION:
+
+SELECT
+    country,
+    region_1,
+    COUNT(DISTINCT 1)
+FROM winemag_p1
+WHERE country <> 'Spain' AND winery LIKE '%bodega%' AND description LIKE '%blackberry%'
+GROUP BY country, region_1
+
+
+
+
+
+DB:
+
+winemag_p1
+id			int
+country			varchar
+description		varchar
+designation		varchar
+points			int
+price			float
+province		varchar
+region_1		varchar
+region_2		varchar
+variety			varchar
+winery			varchar

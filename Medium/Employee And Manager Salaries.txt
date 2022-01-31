@@ -1,0 +1,46 @@
+Find employees who are earning more than their managers. 
+Output the employee name along with the corresponding salary. 
+
+
+
+
+
+SOLUTION:
+
+SELECT
+    first_name,
+    salary
+FROM 
+(
+    SELECT
+        e.id,
+        e.first_name,
+        e.last_name,
+        e.salary,
+        e.manager_id,
+        m.salary AS manager_salary
+    FROM employee e JOIN employee m ON e.manager_id = m.id
+) AS employee_with_manager_salary
+WHERE salary > manager_salary
+
+
+
+
+
+DB:
+
+employee
+id			int
+first_name		varchar
+last_name		varchar
+age			int
+sexvar			char
+employee_title		varchar
+department		varchar
+salary			int
+target			int
+bonus			int
+email			varchar
+city			varchar
+address			varchar
+manager_id		int

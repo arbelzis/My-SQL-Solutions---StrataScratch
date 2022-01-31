@@ -1,0 +1,26 @@
+Find customers who appear in the orders table more than three times.
+
+
+
+
+
+SOLUTION:
+
+SELECT
+    cust_id
+FROM orders
+GROUP BY cust_id
+HAVING COUNT(1) > 3
+
+
+
+
+
+DB:
+
+orders
+id			int
+cust_id			int
+order_date		datetime
+order_details		varchar
+total_order_cost	int

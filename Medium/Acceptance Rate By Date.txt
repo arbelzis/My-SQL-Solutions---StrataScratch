@@ -6,12 +6,6 @@ that's logged in the table with action = 'sent'. If the request is accepted, the
 If the request is not accepted, no record of action = 'accepted' is logged.
 
 
-DB:
-
-user_id_sender          varchar
-user_id_receiver        varchar
-date                    datetime
-action                  varchar
 
 
 
@@ -28,3 +22,15 @@ FROM a LEFT JOIN b
     ON a.user_id_sender = b.user_id_sender AND a.user_id_receiver = b.user_id_receiver
     AND a.action <> b.action
 GROUP BY a.date
+
+
+
+
+
+
+DB:
+
+user_id_sender          varchar
+user_id_receiver        varchar
+date                    datetime
+action                  varchar

@@ -1,0 +1,39 @@
+Find the number of male and female employees per department and also their corresponding total salaries.
+Output department names along with the corresponding number of female employees, the total salary of female employees, the number of male employees, and the total salary of male employees.
+
+
+
+
+
+SOLUTION:
+
+SELECT
+    department,
+    SUM(CASE WHEN sex = 'F' THEN 1 ELSE 0 END) females,
+    SUM(CASE WHEN sex = 'F' THEN salary ELSE 0 END) fem_sal,
+    SUM(CASE WHEN sex = 'M' THEN 1 ELSE 0 END) males,
+    SUM(CASE WHEN sex = 'M' THEN salary ELSE 0 END) aml_sal
+FROM employee
+GROUP BY department
+
+
+
+
+
+DB:
+
+employee
+id			int
+first_name		varchar
+last_name		varchar
+age			int
+sex			varchar
+employee_title		varchar
+department		varchar
+salary			int
+target			int
+bonus			int
+email			varchar
+city			varchar
+address			varchar
+manager_id		int

@@ -1,0 +1,32 @@
+Find the ratio of successfully received messages to sent messages.
+
+
+
+
+
+SOLUTION:
+
+SELECT 
+    COUNT(receiver) / COUNT(sender) ratio
+FROM
+(
+
+SELECT
+    s.message_id, s.sender, r.receiver
+FROM facebook_messages_sent s LEFT JOIN facebook_messages_received r ON s.message_id = r.message_id) x
+
+
+
+
+
+DB:
+
+facebook_messages_sent
+sender				int
+message_id			int
+text				varchar
+
+facebook_messages_received
+receiver			int
+message_id			int
+text				varchar

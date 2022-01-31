@@ -1,0 +1,51 @@
+Find the owners who have at least one facility with all 3 grades.
+
+
+
+
+
+SOLUTION:
+
+SELECT
+    owner_name
+FROM
+(
+    SELECT
+        DISTINCT
+        owner_name,
+        facility_name,
+        SUM(CASE WHEN grade = 'A' THEN 1 ELSE 0 END) A,
+        SUM(CASE WHEN grade = 'B' THEN 1 ELSE 0 END) B,
+        SUM(CASE WHEN grade = 'C' THEN 1 ELSE 0 END) C
+    FROM la_restaurant_health_inspections
+    GROUP BY owner_name, facility_name
+) t1
+WHERE A <> 0 AND b <> 0 AND c <> 0
+
+
+
+
+
+DB:
+
+la_restaurant_health_inspections
+serial_number		varchar
+activity_date		datetime
+facility_name		varchar
+score			int
+grade			varchar
+service_code		int
+service_description	varchar
+employee_id		varchar
+facility_address	varchar
+facility_city		varchar
+facility_id		varchar
+facility_state		varchar
+facility_zip		varchar
+owner_id		varchar
+owner_name		varchar
+pe_description		varchar
+program_element_pe	int
+program_name		varchar
+program_status		varchar
+record_id		varchar

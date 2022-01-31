@@ -1,0 +1,55 @@
+Find the number of orders, the number of customers, and the total cost of orders for each city. 
+Only include cities that have made at least 5 orders and count all customers in each city even if they did not place an order.
+
+Output each calculation along with the corresponding city name
+
+
+
+
+
+SOLUTION:
+
+WITH
+city_list AS (
+    SELECT c.city
+    FROM customers c JOIN orders o ON c.id = o. cust_id
+    GROUP BY c.city HAVING COUNT(1) >= 5
+),
+customers_count AS (
+    SELECT c.city, COUNT(1) customers_count FROM city_list cl RIGHT JOIN customers c ON cl.city = c.city
+    WHERE c.city IN (SELECT * FROM city_list)
+    GROUP BY c.city
+),
+orders_count AS (
+    SELECT c.city, COUNT(1) orders_count, SUM(o.total_order_cost) orders_cost
+    FROM customers c JOIN orders o ON c.id = o.cust_id
+    WHERE city IN (SELECT * FROM city_list)
+    GROUP BY c.city
+)
+SELECT 
+    cc.city, 
+    oc.orders_count,
+    cc.customers_count,
+    oc.orders_cost
+FROM orders_count oc JOIN customers_count cc ON oc.city = cc.city
+
+
+
+
+
+DB:
+
+customers
+id				int
+first_name			varchar
+last_name			varchar
+city				varchar
+address				varchar
+phone_number			varchar
+
+orders
+id				int
+cust_id				int
+order_date			datetime
+order_details			varchar
+total_order_cost		int

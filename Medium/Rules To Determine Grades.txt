@@ -1,0 +1,50 @@
+Find the rules used to determine each grade. Show the rule in a separate column in the format of 'Score > X AND Score <= Y => Grade = A' where X and Y are the lower and upper bounds for a grade. Output the corresponding grade and its highest and lowest scores along with the rule. Order the result based on the grade in ascending order.
+
+
+
+
+
+SOLUTION:
+
+SELECT
+    *,
+    CONCAT('Score > ', min - 1, ' AND Score <= ', max, ' => GRADE = ', grade) rule
+FROM 
+(
+SELECT
+    grade,
+    MIN(score) min,
+    MAX(score) max
+FROM los_angeles_restaurant_health_inspections
+GROUP BY grade
+) t1
+
+
+
+
+
+
+DB:
+
+los_angeles_restaurant_health_inspections
+serial_number			varchar
+activity_date			datetime
+facility_name			varchar
+score				int
+grade				varchar
+service_code			int
+service_description		varchar
+employee_id			varchar
+facility_address		varchar
+facility_city			varchar
+facility_id			varchar
+facility_state			varchar
+facility_zip			varchar
+owner_id			varchar
+owner_name			varchar
+pe_description			varchar
+program_element_pe		int
+program_name			varchar
+program_status			varchar
+record_id			varchar
+

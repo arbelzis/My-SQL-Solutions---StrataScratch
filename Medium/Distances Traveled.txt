@@ -1,0 +1,37 @@
+Find the top 10 users that have traveled the greatest distance. 
+Output their id, name and a total distance traveled. 
+
+
+
+
+
+SOLUTION:
+
+SELECT
+    user_id,
+    name,
+    total_distance
+FROM 
+(
+    SELECT
+        r.id, r.user_id, u.name, SUM(r.distance) total_distance,
+        ROW_NUMBER() OVER (ORDER BY SUM(r.distance) DESC) rnk
+    FROM lyft_rides_log r JOIN lyft_users u ON r.user_id = u.id
+    GROUP BY user_id
+) ranked_users
+WHERE rnk <= 10
+
+
+
+
+
+DB:
+
+lyft_rides_log
+id		int
+user_id		int
+distance	int
+
+lyft_users
+id	int
+name	varchar

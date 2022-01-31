@@ -1,0 +1,34 @@
+Find whether the number of senior workers (i.e., more experienced) at Meta/Meta/Facebook is higher than its number of USA based employees.
+If the number of seniors is higher then output as 'More seniors'. Otherwise, output as 'More USA-based'.
+
+
+
+
+
+SOLUTION:
+
+SELECT
+    CASE 
+        WHEN senior > junior THEN 'More seniors'
+        ELSE 'More USA-based'
+    END winner
+FROM
+(
+    SELECT
+        SUM(CASE WHEN is_senior = 'FALSE' AND location = 'USA' THEN 1 ELSE 0 END) junior,
+        SUM(CASE WHEN is_senior = 'True' THEN 1 ELSE 0 END) senior
+    FROM facebook_employees
+) t1
+
+
+
+
+
+DB:
+
+facebook_employees
+id			int
+location		varchar
+age			int
+gender			varchar
+is_senior		bool
